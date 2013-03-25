@@ -10,8 +10,9 @@ describe('Routes', function () {
 
   var server;
 
-  before(function(){
-    server = new Hapi.Server(collectdVisor.defaultConfig());
+  before(function () {
+    // load with just the views fragment of the configuration
+    server = new Hapi.Server({views: collectdVisor.defaultViewConfig()});
     collectdVisor.routes(server);
   });
 
