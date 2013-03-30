@@ -9,12 +9,11 @@ var expect = chai.expect;
 describe('Directory Tree', function () {
   it('should locate a host and some metrics in the data directory', function(done){
 
-    var hostMetrics = {};
-
-    treeToMetrics.scanDirectoryForMetrics(hostMetrics, function(err){
+    treeToMetrics.scanDirectoryForMetrics('./data/collectd/rrd', function(err, data){
       expect(err).to.not.exist;
-      expect(hostMetrics['ubuntu1204-2server01']).to.exist;
-      expect(hostMetrics['ubuntu1204-2server01']['cpu-0']['cpu-idle']).to.exist;
+      expect(data['ubuntu1204-2server01']).to.exist;
+      expect(data['ubuntu1204-2server01']['cpu-0']).to.exist;
+      expect(data['ubuntu1204-2server01']['cpu-0'].length).to.eql(8);
       done()
     })
 
