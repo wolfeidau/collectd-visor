@@ -1,5 +1,6 @@
 {
   "name": "collectd-visor",
+  "author": "Mark Wolfe <mark@wolfe.id.au>",
   "version": "0.1.0",
   "description": "Viewer for collectd data stored in rrd.",
   "main": "lib/index.js",
@@ -15,7 +16,6 @@
     "graphs",
     "rrdtool"
   ],
-  "author": "Mark Wolfe <mark@wolfe.id.au>",
   "license": "MIT",
   "dependencies": {
     "hapi": "~0.15.6",
