@@ -1,12 +1,24 @@
 // Load modules
-var chai = require('chai');
+var chai = require('chai')
+  , rimraf = require('rimraf')
+  , mkdirp = require('mkdirp');
 
 var RRDTool = require('../../lib/rrd');
 
 var expect = chai.expect;
 
+var tempPath = './temp/collectd/rrd/ubuntu1204-2server01/load';
+
 describe('RRD', function () {
 
+  before(function (done) {
+    rimraf(tempPath, function () {
+      mkdirp(tempPath, function (err) {
+        if (err) throw Error(err);
+        done();
+      })
+    })
+  })
 
   describe('utils', function () {
 
@@ -91,6 +103,25 @@ describe('RRD', function () {
         expect(err).to.not.exist;
         expect(data).to.exist;
         expect(data.headers).to.eql([ 'timestamp', 'shortterm', 'midterm', 'longterm' ]);
+        done();
+
+      });
+    });
+
+  });
+
+  describe('create and update', function () {
+
+    var rrd;
+
+    before(function () {
+      rrd = new RRDTool();
+    });
+
+    it('should create an rrd file for the given metric', function (done) {
+
+      rrd.create('./temp/collectd/rrd/ubuntu1204-2server01/load/load.rrd', ['DS:temp:GAUGE:600:U:U'], ['RRA:AVERAGE:0.5:1:1200','RRA:MIN:0.5:1:1200', 'RRA:MAX:0.5:1:1200'], function (err) {
+        expect(err).to.not.exist;
         done();
 
       });
